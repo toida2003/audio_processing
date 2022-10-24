@@ -14,8 +14,9 @@ sd.default.device = [9, 4] # Input, Outputデバイス指定
 # クライアント操作(WIFI通信) ################################################################################################################
 def operation(select):
 
-    HOST_NAME = "172.16.14.112"
+    HOST_NAME = "192.168.4."
     PORT = 5000
+    TEXT = "1"
 
     if(select == 0):
         print("Process : No Operation")
@@ -23,32 +24,36 @@ def operation(select):
         print("Process : 1")
         HOST_NAME = "192.168.4.1"
         PORT = 5000
+        TEXT = "1"
     elif(select == 2):
         print("Process : 2")
-        HOST_NAME = "127.0.0.2"
+        HOST_NAME = "192.168.4.1"
         PORT = 5000
+        TEXT = "2"
     elif(select == 3):
         print("Process : 3")
         HOST_NAME = "127.0.0.3"
         PORT = 5000
+        TEXT = "3"
     elif(select == 4):
         print("Process : 4")
         HOST_NAME = "127.0.0.4"
         PORT = 5000
+        TEXT = "4"
 
     if(select != 0):
-            #sk_client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)   #ソケット作成(TCP)
-            sk_client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)    #ソケット作成(UDP)
+            sk_client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)   #ソケット作成(TCP)
+            #sk_client = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)    #ソケット作成(UDP)
             try:
-                #sk_client.connect((HOST_NAME, PORT))                    #TCP
-                #sk_client.send("TEST".encode("utf-8"))                  #TCP
-                send = sk_client.sendto("TEST".encode("utf-8"), (HOST_NAME, PORT))     #UDP
+                sk_client.connect((HOST_NAME, PORT))                    #TCP
+                sk_client.send(TEXT.encode("utf-8"))                    #TCP
+                #send = sk_client.sendto("TEST".encode("utf-8"), (HOST_NAME, PORT))     #UDP
                 sk_client.close()
-                print("Connection ( IP :",HOST_NAME,")")                #UDP
-                #print("Connection Successful ( IP :",HOST_NAME,")")     #TCP
+                #print("Connection ( IP :",HOST_NAME,")")               #UDP
+                print("Connection Successful ( IP :",HOST_NAME,")")     #TCP
             except socket.error:
                 sk_client.close() 
-                #print("Connection Faild ( IP :",HOST_NAME,")")          #TCP
+                print("Connection Faild ( IP :",HOST_NAME,")")          #TCP
 
     return None
 
@@ -89,7 +94,7 @@ def count(data):
 
     if (thresh_over >= count * 3):
         count = 0
-    print("Detection Count :", thresh_over)
+    print("Thresh_Over Count :", thresh_over)
     print("Detection Count :", count)
 
     return count
